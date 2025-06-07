@@ -8,6 +8,7 @@ const {
   getPendingCommissionController,
   redeemCommissionController,
 } = require("../controllers/commisionController");
+const { getStockSummaryController } = require("../controllers/stockController");
 const router = express.Router();
 
 router.post("/verify/serial-numbers", postSerialNumberController);
@@ -23,3 +24,5 @@ router.post(
   "/verify/users/:userId/commission/redeem",
   redeemCommissionController
 );
+
+router.get("/verify/stock-summary", getStockSummaryController);

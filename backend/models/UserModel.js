@@ -10,6 +10,10 @@ const UserSchema = new mongoose.Schema({
     type: Number,
     required: false,
   },
+  consumedSerialNumbers: {
+    type: [String],
+    required: false,
+  },
 });
 
 module.exports = mongoose.model("User", UserSchema);

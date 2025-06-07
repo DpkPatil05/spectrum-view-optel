@@ -43,7 +43,7 @@ export const postSerialNumberController = async (req, res) => {
     const newSerial = new SerialNumber({
       serial_number,
       mrp,
-      consumedBy: [],
+      consumedBy: "",
     });
     await newSerial.save();
     res.status(201).json({
@@ -113,20 +113,19 @@ export const getSerialNumberController = async (req, res) => {
 /**
  * Controller to handle the consumption of a serial number by a user.
  *
- * This function validates the request body to ensure `userId` and `serialNumber` are provided.
- * It checks if the serial number exists and whether it has already been consumed by the user.
- * If valid, it marks the serial number as consumed by the user and updates the user's commission amount.
+ * Validates that both `userId` and `serialNumber` are present in the request body.
+ * Checks if the serial number exists and if it has already been consumed by the user.
+ * If not, marks the serial number as consumed by the user, updates its status,
+ * and increments the user's commission amount.
  *
  * @async
  * @function consumeSerialNumberController
- * @param {Object} req - The HTTP request object.
- * @param {Object} req.body - The request body containing `userId` and `serialNumber`.
- * @param {string} req.body.userId - The ID of the user consuming the serial number.
- * @param {string} req.body.serialNumber - The serial number to be consumed.
- * @param {Object} res - The HTTP response object.
- * @returns {Promise<void>} Sends a JSON response indicating success or failure.
+ * @param {Object} req - Express request object containing `userId` and `serialNumber` in the body.
+ * @param {Object} res - Express response object.
+ * @returns {Promise<void>} Sends a JSON response indicating the result of the operation.
  *
- * @throws {Error} Returns a 500 status code if an internal server error occurs.
+ * @throws {Error} Returns a 400 or 404 status code for validation errors or missing resources,
+ * and a 500 status code for unexpected server errors.
  */
 export const consumeSerialNumberController = async (req, res) => {
   const { userId, serialNumber } = req.body;
@@ -163,8 +162,8 @@ export const consumeSerialNumberController = async (req, res) => {
     }
 
     // Mark the serial number as consumed by the user
-    existingSerial.consumedBy = existingSerial.consumedBy || [];
-    existingSerial.consumedBy.push(userId);
+    existingSerial.consumedBy = userId;
+    existingSerial.status = "consumed";
     await existingSerial.save();
 
     const commissionEarned = 10;
