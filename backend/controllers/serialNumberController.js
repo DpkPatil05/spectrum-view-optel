@@ -185,7 +185,7 @@ export const consumeSerialNumberController = async (req, res) => {
     return res.status(201).json({
       message: "Serial number successfully consumed.",
       success: true,
-      commissionEarned: commissionEarned,
+      commissionEarned,
     });
   } catch (error) {
     console.error("Server Error:", error); // Log the detailed error

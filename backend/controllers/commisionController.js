@@ -28,9 +28,7 @@ export const getPendingCommissionController = async (req, res) => {
     const pendingCommission = user.consumedSerialNumbers?.length || 0;
 
     // Respond with the pending commission
-    res
-      .status(201)
-      .json({ pendingCommission: pendingCommission, success: true });
+    res.status(201).json({ pendingCommission, success: true });
   } catch (error) {
     console.error("Error fetching pending commission:", error);
     res.status(500).json({ error: "Internal server error", success: false });
