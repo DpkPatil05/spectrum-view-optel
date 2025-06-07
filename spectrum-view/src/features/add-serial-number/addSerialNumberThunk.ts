@@ -4,7 +4,7 @@ import { postSerialNumber } from "@/api/postSerialNumber";
 
 // Thunk to handle form submission
 export const addSerialNumberThunk = createAsyncThunk(
-  "contact/submitSerialNumber",
+  "verify/serial-numbers",
   async (formData: SerialNumbersData, { rejectWithValue }) => {
     try {
       const response = await postSerialNumber(formData, {

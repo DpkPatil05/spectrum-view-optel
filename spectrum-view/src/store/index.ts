@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import addSerialNumberReducer from "../features/add-serial-number/addSerialNumberSlice";
+import getStockInformationReducer from "../features/get-stock-information/getStockInformationSlice";
 
 export const store = configureStore({
   reducer: {
     addSerialNumber: addSerialNumberReducer,
+    getStockInformation: getStockInformationReducer,
   },
 });
 
