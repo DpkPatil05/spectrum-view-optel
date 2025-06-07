@@ -1,15 +1,12 @@
-import { SerialNumbersData } from "@/interfaces/SerialNumbersData";
 import { axiosInstance } from "./axiosInstance";
 
-export const postSerialNumber = async (
-  formData: SerialNumbersData,
-  { rejectWithValue }: { rejectWithValue: (value: string) => void }
-) => {
+export const getStockInformation = async ({
+  rejectWithValue,
+}: {
+  rejectWithValue: (value: string) => void;
+}) => {
   try {
-    const response = await axiosInstance.post("/serial-numbers", {
-      serial_number: formData.serial_number.trim(),
-      mrp: parseFloat((formData.mrp ?? "0").toString()),
-    });
+    const response = await axiosInstance.get("/stock-summary");
 
     return response.data;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

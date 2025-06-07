@@ -34,7 +34,7 @@ exports.postSerialNumberController = async (req, res) => {
     const existingSerial = await SerialNumber.findOne({ serial_number });
     if (existingSerial) {
       return res.status(400).json({
-        message: "This serial number already exists.",
+        message: "This serial number already exists",
         data: {},
         success: false,
       });
@@ -47,7 +47,7 @@ exports.postSerialNumberController = async (req, res) => {
     });
     await newSerial.save();
     res.status(201).json({
-      message: "Serial number added successfully.",
+      message: "Serial number added successfully",
       data: newSerial,
       success: true,
     });
