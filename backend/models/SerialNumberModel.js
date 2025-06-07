@@ -11,7 +11,12 @@ const SerialNumberSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
-    consumedBy: { type: [String], required: false },
+    consumedBy: { type: String, required: false },
+    status: {
+      type: String,
+      enum: ["inStock", "consumed"],
+      default: "inStock",
+    },
   },
   { timestamps: true }
 );
