@@ -1,4 +1,4 @@
-const User = require("../models/User");
+const User = require("../models/UserModel");
 
 /**
  * Controller to fetch a summary of users, including total sold items, claimed commission, and pending commission.
@@ -11,7 +11,7 @@ const User = require("../models/User");
  *
  * @throws {Error} Returns a 500 status code if an error occurs during data fetching.
  */
-export const getUserSummaryController = async (req, res) => {
+exports.getUserSummaryController = async (req, res) => {
   try {
     const users = await User.find();
 

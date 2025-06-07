@@ -1,3 +1,5 @@
+const SerialNumber = require("../models/SerialNumberModel");
+
 /**
  * Controller to fetch the summary of serial numbers in stock and consumed.
  *
@@ -10,7 +12,7 @@
  *
  * @throws {Error} Returns a 500 status in case of server errors.
  */
-export const getStockSummaryController = async (req, res) => {
+exports.getStockSummaryController = async (req, res) => {
   try {
     const inStock = await SerialNumber.countDocuments({ status: "inStock" });
     const consumed = await SerialNumber.countDocuments({ status: "consumed" });

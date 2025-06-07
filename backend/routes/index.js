@@ -31,3 +31,5 @@ router.post(
 router.get("/verify/stock-summary", getStockSummaryController);
 
 router.get("/verify/users/summary", getUserSummaryController);
+
+module.exports = router;
