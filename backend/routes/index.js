@@ -9,6 +9,9 @@ const {
   redeemCommissionController,
 } = require("../controllers/commisionController");
 const { getStockSummaryController } = require("../controllers/stockController");
+const {
+  getUserSummaryController,
+} = require("../controllers/userSummaryController");
 const router = express.Router();
 
 router.post("/verify/serial-numbers", postSerialNumberController);
@@ -26,3 +29,5 @@ router.post(
 );
 
 router.get("/verify/stock-summary", getStockSummaryController);
+
+router.get("/verify/users/summary", getUserSummaryController);
