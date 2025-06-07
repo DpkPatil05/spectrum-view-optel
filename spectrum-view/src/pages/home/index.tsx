@@ -7,12 +7,12 @@ import {
   PlusCircle,
 } from "lucide-react";
 import NavItem from "@/components/NavItem";
-import AddSerialNumberForm from "../add-serial-number";
+import AddSerialNumberPage from "../add-serial-number";
 import { NavItems } from "@/constants";
 import { Toaster } from "sonner";
-import Dashboard from "../dashboard";
+import DashboardPage from "../dashboard";
 
-const Home: FC = () => {
+const HomePage: FC = () => {
   const [activeView, setActiveView] = useState<NavItems>(NavItems.Dashboard);
 
   return (
@@ -83,8 +83,8 @@ const Home: FC = () => {
         {/* Body */}
         <div className="p-6 backdrop-blur-md bg-white/5 shadow-xl rounded-lg m-4 border border-white/10 min-h-[calc(100vh-96px)]">
           <Toaster richColors position="bottom-right" closeButton />
-          {activeView === NavItems.Dashboard && <Dashboard />}
-          {activeView === NavItems.AddProducts && <AddSerialNumberForm />}
+          {activeView === NavItems.Dashboard && <DashboardPage />}
+          {activeView === NavItems.AddProducts && <AddSerialNumberPage />}
           {activeView === NavItems.Settings && (
             <div className="text-muted-foreground">Settings coming soon...</div>
           )}
@@ -97,4 +97,4 @@ const Home: FC = () => {
   );
 };
 
-export default Home;
+export default HomePage;
