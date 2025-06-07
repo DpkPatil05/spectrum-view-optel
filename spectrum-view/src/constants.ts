@@ -1,6 +1,6 @@
 export enum NavItems {
     Dashboard = "dashboard",
-    AddProducts = "addProduct",
+    AddProducts = "Add Products",
     Settings = "settings",
     Logout = "logout",
 }

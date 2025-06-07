@@ -136,7 +136,7 @@ const HomePage: FC = () => {
           <h1 className="text-lg font-semibold capitalize">{activeView}</h1>
           <div className="flex items-center gap-2">
             <UserCircle className="w-8 h-8 text-white/60" />
-            <span className="text-sm">John Doe</span>
+            <span className="text-sm">Admin</span>
           </div>
         </header>
 
