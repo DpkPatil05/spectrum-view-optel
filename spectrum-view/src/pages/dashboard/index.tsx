@@ -64,18 +64,18 @@ const DashboardPage: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Cards */}
-      <div className="grid gap-4 grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
         <Card
-          title="In Stock"
+          title="Stock Remaining"
           value={stockLoading ? "Loading..." : inStock?.toLocaleString() || "0"}
-          className="bg-green-100 text-green-900 border-green-300"
+          className="backdrop-blur-md bg-white/10 border border-white/10 text-white shadow-md rounded-xl"
         />
         <Card
-          title="Consumed"
+          title="Total Consumed"
           value={
             stockLoading ? "Loading..." : consumed?.toLocaleString() || "0"
           }
-          className="bg-blue-100 text-blue-900 border-blue-300"
+          className="backdrop-blur-md bg-white/10 border border-white/10 text-white shadow-md rounded-xl"
         />
       </div>
 

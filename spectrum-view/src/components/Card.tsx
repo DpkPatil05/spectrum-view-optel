@@ -14,8 +14,8 @@ const Card: React.FC<CardProps> = ({ title, value, className }) => (
       className
     )}
   >
-    <h3 className="text-sm text-gray-600 mb-2">{title}</h3>
-    <p className="text-2xl font-semibold">{value}</p>
+    <h3 className="text-sm text-white/80 mb-2">{title}</h3>
+    <p className="text-2xl font-semibold text-white">{value}</p>
   </div>
 );
 
