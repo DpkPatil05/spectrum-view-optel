@@ -1,4 +1,4 @@
-import SerialNumber from "../models/SerialNumberModel";
+const SerialNumber = require("../models/SerialNumberModel");
 const User = require("../models/UserModel");
 
 /**
@@ -21,7 +21,7 @@ const User = require("../models/UserModel");
  * @throws {Error} Returns a 400 status code if required fields are missing, the serial number already exists,
  * or violates unique constraints. Returns a 500 status code for unexpected server errors.
  */
-export const postSerialNumberController = async (req, res) => {
+exports.postSerialNumberController = async (req, res) => {
   const { serial_number, mrp } = req.body;
 
   if (!serial_number || !mrp) {
@@ -79,7 +79,7 @@ export const postSerialNumberController = async (req, res) => {
  *
  * @throws {Error} Returns a 500 status code if an internal server error occurs.
  */
-export const getSerialNumberController = async (req, res) => {
+exports.getSerialNumberController = async (req, res) => {
   const { serialNumber } = req.params;
 
   if (!serialNumber) {
@@ -127,7 +127,7 @@ export const getSerialNumberController = async (req, res) => {
  * @throws {Error} Returns a 400 or 404 status code for validation errors or missing resources,
  * and a 500 status code for unexpected server errors.
  */
-export const consumeSerialNumberController = async (req, res) => {
+exports.consumeSerialNumberController = async (req, res) => {
   const { userId, serialNumber } = req.body;
 
   if (!userId || !serialNumber) {

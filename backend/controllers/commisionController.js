@@ -1,4 +1,4 @@
-import User from "../models/UserModel";
+const User = require("../models/UserModel");
 
 /**
  * Controller to fetch the pending commission for a user.
@@ -12,7 +12,7 @@ import User from "../models/UserModel";
  *
  * @returns {void} Responds with JSON containing the pending commission and success status.
  */
-export const getPendingCommissionController = async (req, res) => {
+exports.getPendingCommissionController = async (req, res) => {
   try {
     const userId = req.params.userId;
 
@@ -49,7 +49,7 @@ export const getPendingCommissionController = async (req, res) => {
  *
  * @returns {void} Responds with JSON indicating redemption status and redeemed amount.
  */
-export const redeemCommissionController = async (req, res) => {
+exports.redeemCommissionController = async (req, res) => {
   try {
     const userId = req.params.userId;
     const { pointsToRedeem } = req.body;
