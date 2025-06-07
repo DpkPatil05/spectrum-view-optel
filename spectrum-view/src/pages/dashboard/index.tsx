@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/store";
 import Card from "@/components/Card";
 
-const Dashboard: React.FC = () => {
+const DashboardPage: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { inStock, consumed, loading, error } = useSelector(
     (state: RootState) => state.getStockInformation
@@ -44,4 +44,4 @@ const Dashboard: React.FC = () => {
   );
 };
 
-export default Dashboard;
+export default DashboardPage;

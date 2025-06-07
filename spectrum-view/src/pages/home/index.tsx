@@ -6,14 +6,33 @@ import {
   UserCircle,
   PlusCircle,
 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import NavItem from "@/components/NavItem";
-import AddSerialNumberForm from "../add-serial-number";
+import AddSerialNumberPage from "../add-serial-number";
 import { NavItems } from "@/constants";
 import { Toaster } from "sonner";
-import Dashboard from "../dashboard";
+import DashboardPage from "../dashboard";
+import {
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogHeader,
+  AlertDialogFooter,
+  AlertDialogTitle,
+  AlertDialogDescription,
+  AlertDialogCancel,
+  AlertDialogAction,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
-const Home: FC = () => {
+const HomePage: FC = () => {
   const [activeView, setActiveView] = useState<NavItems>(NavItems.Dashboard);
+  const [showLogoutDialog, setShowLogoutDialog] = useState(false);
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    setShowLogoutDialog(false);
+    navigate("/");
+  };
 
   return (
     <div className="min-h-screen flex bg-gradient-to-br from-[#0b1120] via-[#111827] to-[#0b1120] text-foreground">
@@ -54,16 +73,39 @@ const Home: FC = () => {
             } hover:text-white`}
           />
 
-          <NavItem
-            icon={<LogOut className="w-5 h-5" />}
-            label="Logout"
-            onClick={() => setActiveView(NavItems.Logout)}
-            className={`transition-colors ${
-              activeView === NavItems.Logout
-                ? "bg-white/10 text-white"
-                : "text-muted"
-            } hover:text-white`}
-          />
+          {/* Logout Trigger */}
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <NavItem
+                icon={<LogOut className="w-5 h-5" />}
+                label="Logout"
+                onClick={() => setShowLogoutDialog(true)}
+                className={`transition-colors ${
+                  activeView === NavItems.Logout
+                    ? "bg-white/10 text-white"
+                    : "text-muted"
+                } hover:text-white`}
+              />
+            </AlertDialogTrigger>
+            {showLogoutDialog && (
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    You will be logged out and redirected to the login screen.
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel onClick={() => setShowLogoutDialog(false)}>
+                    Cancel
+                  </AlertDialogCancel>
+                  <AlertDialogAction onClick={handleLogout}>
+                    Yes, Logout
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            )}
+          </AlertDialog>
         </nav>
       </aside>
 
@@ -83,13 +125,10 @@ const Home: FC = () => {
         {/* Body */}
         <div className="p-6 backdrop-blur-md bg-white/5 shadow-xl rounded-lg m-4 border border-white/10 min-h-[calc(100vh-96px)]">
           <Toaster richColors position="bottom-right" closeButton />
-          {activeView === NavItems.Dashboard && <Dashboard />}
-          {activeView === NavItems.AddProducts && <AddSerialNumberForm />}
+          {activeView === NavItems.Dashboard && <DashboardPage />}
+          {activeView === NavItems.AddProducts && <AddSerialNumberPage />}
           {activeView === NavItems.Settings && (
             <div className="text-muted-foreground">Settings coming soon...</div>
-          )}
-          {activeView === NavItems.Logout && (
-            <div className="text-muted-foreground">Logging out...</div>
           )}
         </div>
       </main>
@@ -97,4 +136,4 @@ const Home: FC = () => {
   );
 };
 
-export default Home;
+export default HomePage;

@@ -12,7 +12,7 @@ import {
 } from "@/features/add-serial-number/addSerialNumberSlice";
 import { addSerialNumberThunk } from "@/features/add-serial-number/addSerialNumberThunk";
 
-const AddSerialNumberForm: React.FC = () => {
+const AddSerialNumberPage: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
 
   const { formData, loading, error } = useSelector(
@@ -130,4 +130,4 @@ const AddSerialNumberForm: React.FC = () => {
   );
 };
 
-export default AddSerialNumberForm;
+export default AddSerialNumberPage;
