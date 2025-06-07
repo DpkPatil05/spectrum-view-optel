@@ -23,22 +23,33 @@ import {
   AlertDialogAction,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import useCovidData from "@/hooks/useCovidData";
 
 const HomePage: FC = () => {
   const [activeView, setActiveView] = useState<NavItems>(NavItems.Dashboard);
   const [showLogoutDialog, setShowLogoutDialog] = useState(false);
   const navigate = useNavigate();
+  const newCases = useCovidData();
 
   const handleLogout = () => {
     setShowLogoutDialog(false);
     navigate("/");
   };
 
+  const covidBgGlass = (() => {
+    if (newCases === null) return "bg-white/10 border-white/10";
+    if (newCases < 500) return "bg-green-200/10 border-green-400/30";
+    if (newCases <= 5000) return "bg-orange-300/10 border-orange-500/30";
+    return "bg-red-500/10 border-red-500/30 animate-pulse shadow-lg shadow-red-500/20";
+  })();
+
   return (
-    <div className="min-h-screen flex bg-gradient-to-br from-[#0b1120] via-[#111827] to-[#0b1120] text-foreground">
+    <div className="min-h-screen flex bg-[#0b1120] text-white transition-colors duration-500">
       {/* Sidebar */}
-      <aside className="w-64 hidden md:flex flex-col border-r border-white/10 bg-white/5 backdrop-blur-md shadow-md rounded-r-xl">
-        <div className="p-6 text-xl font-bold text-white">SpectrumView</div>
+      <aside
+        className={`w-64 hidden md:flex flex-col backdrop-blur-md shadow-md rounded-r-xl border ${covidBgGlass}`}
+      >
+        <div className="p-6 text-xl font-bold">SpectrumView</div>
         <nav className="flex flex-col gap-2 px-4">
           <NavItem
             icon={<LayoutDashboard className="w-5 h-5" />}
@@ -50,7 +61,6 @@ const HomePage: FC = () => {
                 : "text-muted"
             } hover:text-white`}
           />
-
           <NavItem
             icon={<PlusCircle className="w-5 h-5" />}
             label="Add Products"
@@ -61,7 +71,6 @@ const HomePage: FC = () => {
                 : "text-muted"
             } hover:text-white`}
           />
-
           <NavItem
             icon={<Settings className="w-5 h-5" />}
             label="Settings"
@@ -73,7 +82,7 @@ const HomePage: FC = () => {
             } hover:text-white`}
           />
 
-          {/* Logout Trigger */}
+          {/* Logout */}
           <AlertDialog>
             <AlertDialogTrigger asChild>
               <NavItem
@@ -112,18 +121,20 @@ const HomePage: FC = () => {
       {/* Main Content */}
       <main className="flex-1 flex flex-col">
         {/* Header */}
-        <header className="h-16 flex items-center justify-between px-6 border-b border-white/10 bg-white/5 backdrop-blur-md shadow-sm">
-          <h1 className="text-lg font-semibold capitalize text-white">
-            {activeView}
-          </h1>
-          <div className="flex items-center gap-2 text-white">
+        <header
+          className={`h-16 flex items-center justify-between px-6 border-b backdrop-blur-md shadow-sm ${covidBgGlass}`}
+        >
+          <h1 className="text-lg font-semibold capitalize">{activeView}</h1>
+          <div className="flex items-center gap-2">
             <UserCircle className="w-8 h-8 text-white/60" />
             <span className="text-sm">John Doe</span>
           </div>
         </header>
 
         {/* Body */}
-        <div className="p-6 backdrop-blur-md bg-white/5 shadow-xl rounded-lg m-4 border border-white/10 min-h-[calc(100vh-96px)]">
+        <div
+          className={`m-4 p-6 rounded-xl backdrop-blur-md shadow-xl border min-h-[calc(100vh-96px)] ${covidBgGlass}`}
+        >
           <Toaster richColors position="bottom-right" closeButton />
           {activeView === NavItems.Dashboard && <DashboardPage />}
           {activeView === NavItems.AddProducts && <AddSerialNumberPage />}
