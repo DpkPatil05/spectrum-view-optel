@@ -24,6 +24,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import useCovidData from "@/hooks/useCovidData";
+import Loader from "@/components/Loader";
 
 const HomePage: FC = () => {
   const [activeView, setActiveView] = useState<NavItems>(NavItems.Dashboard);
@@ -36,8 +37,16 @@ const HomePage: FC = () => {
     navigate("/");
   };
 
+  if (newCases === null) {
+    // Show loader while fetching data
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-[#0b1120]">
+        <Loader />
+      </div>
+    );
+  }
+
   const covidBgGlass = (() => {
-    if (newCases === null) return "bg-white/10 border-white/10";
     if (newCases < 500) return "bg-green-200/10 border-green-400/30";
     if (newCases <= 5000) return "bg-orange-300/10 border-orange-500/30";
     return "bg-red-500/10 border-red-500/30 animate-pulse shadow-lg shadow-red-500/20";

@@ -5,7 +5,6 @@ const useCovidData = () => {
   const [stateName, setStateName] = useState<string | null>(null);
   const lastTotalRef = useRef<number | null>(null);
 
-  // Get user location and determine the state name
   const fetchUserState = async () => {
     try {
       const geo = await new Promise<GeolocationPosition>((resolve, reject) =>
@@ -14,7 +13,6 @@ const useCovidData = () => {
 
       const { latitude, longitude } = geo.coords;
 
-      // Use OpenStreetMap Nominatim to reverse geocode lat/lng to state
       const res = await fetch(
         `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&zoom=5&addressdetails=1`
       );
@@ -47,9 +45,13 @@ const useCovidData = () => {
 
         const totalCases = stateData?.totalConfirmed || 0;
 
-        if (lastTotalRef.current !== null) {
+        if (lastTotalRef.current === null) {
+          // First time fetch, set newCases to total cases
+          setNewCases(0);
+        } else {
+          // Subsequent fetches, calculate diff
           const diff = totalCases - lastTotalRef.current;
-          if (diff >= 0) setNewCases(diff); // Only set if new cases are added
+          if (diff >= 0) setNewCases(diff);
         }
 
         lastTotalRef.current = totalCases;
