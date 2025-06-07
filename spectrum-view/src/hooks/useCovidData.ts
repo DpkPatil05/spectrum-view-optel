@@ -5,6 +5,21 @@ const useCovidData = () => {
   const [stateName, setStateName] = useState<string | null>(null);
   const lastTotalRef = useRef<number | null>(null);
 
+  /**
+   * Attempts to determine the user's current state (region) using the browser's geolocation API
+   * and reverse geocoding via the OpenStreetMap Nominatim service.
+   *
+   * - Requests the user's current geographic coordinates.
+   * - Uses these coordinates to perform a reverse geocoding lookup to obtain address details.
+   * - Extracts the 'state' property from the resulting address and updates the local state if found.
+   * - Handles and logs any errors that occur during the process.
+   *
+   * @remarks
+   * This function relies on browser support for the Geolocation API and network access to the
+   * OpenStreetMap Nominatim service. User permission is required for geolocation.
+   *
+   * @returns {Promise<void>} A promise that resolves when the operation is complete.
+   */
   const fetchUserState = async () => {
     try {
       const geo = await new Promise<GeolocationPosition>((resolve, reject) =>
@@ -46,7 +61,7 @@ const useCovidData = () => {
         const totalCases = stateData?.totalConfirmed || 0;
 
         if (lastTotalRef.current === null) {
-          // First time fetch, set newCases to total cases
+          // First time fetch, set newCases to 0
           setNewCases(0);
         } else {
           // Subsequent fetches, calculate diff
