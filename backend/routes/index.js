@@ -6,6 +6,7 @@ const {
 } = require("../controllers/serialNumberController");
 const {
   getPendingCommissionController,
+  redeemCommissionController,
 } = require("../controllers/commisionController");
 const router = express.Router();
 
@@ -16,4 +17,9 @@ router.post("/verify/consume ", consumeSerialNumberController);
 router.get(
   "/verify/users/:userId/commission/pending",
   getPendingCommissionController
+);
+
+router.post(
+  "/verify/users/:userId/commission/redeem",
+  redeemCommissionController
 );
