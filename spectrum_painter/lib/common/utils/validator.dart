@@ -10,7 +10,7 @@ class Validator {
     String? emailValidation = _validateEmail(userModel.email);
     String? passwordValidation = _validatePassword(userModel.password);
     if (emailValidation != null && passwordValidation != null) {
-      return CommonConstants.strings.invalidEmailAndPassword;
+      return StringConstants.invalidEmailAndPassword;
     } else if (emailValidation != null) {
       return emailValidation;
     } else if (passwordValidation != null) {
@@ -21,16 +21,16 @@ class Validator {
 
   static String? _validateEmail(String? email) {
     if (email == null || email.isEmpty) {
-      return CommonConstants.strings.emptyEmailValidation;
+      return StringConstants.emptyEmailValidation;
     } else if (!email.isValidEmail) {
-      return CommonConstants.strings.invalidEmailFormatValidation;
+      return StringConstants.invalidEmailFormatValidation;
     }
     return null;
   }
 
   static String? _validatePassword(String? password) {
     if (password != null && password.isEmpty) {
-      return CommonConstants.strings.emptyPasswordValidation;
+      return StringConstants.emptyPasswordValidation;
     }
     return null;
   }

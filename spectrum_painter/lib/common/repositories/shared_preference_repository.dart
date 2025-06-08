@@ -34,7 +34,7 @@ class SharedPreferenceRepository {
         await _sharedPreferences.setDouble(key, value);
         break;
       default:
-        debugPrint(CommonConstants.strings.dataTypeNotFound);
+        debugPrint(StringConstants.dataTypeNotFound);
     }
   }
 

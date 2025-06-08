@@ -56,7 +56,7 @@ class LoginBlocImpl extends LoginBloc {
         // Mock server check delay to test button
         await Future.delayed(const Duration(seconds: 4));
         await _sharedPreferencesService.setSharedPrefsData(
-          key: CommonConstants.sharedPreferencesKeys.loginKey,
+          key: SharedPreferencesKeyConstants.loginKey,
           value: true,
         );
         // TODO(Dpk): Check if actually logged in

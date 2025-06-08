@@ -11,7 +11,7 @@ class Routes {
   /// Get login status data from SharedPreference.
   static bool get _isLoginComplete =>
       _sharedPreferencesService.getBoolData(
-        CommonConstants.sharedPreferencesKeys.loginKey,
+        SharedPreferencesKeyConstants.loginKey,
       ) ??
       false;
 
@@ -31,8 +31,8 @@ enum Routers { root, home }
 extension RoutersExtension on Routers {
   String get path {
     return switch (this) {
-      Routers.root => CommonConstants.routes.root,
-      Routers.home => CommonConstants.routes.home,
+      Routers.root => RouteConstants.root,
+      Routers.home => RouteConstants.home,
     };
   }
 }
