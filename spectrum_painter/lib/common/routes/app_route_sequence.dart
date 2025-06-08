@@ -10,6 +10,8 @@ import '../../feature/mark_as_bought/bloc/mark_as_bought_bloc.dart';
 import '../../feature/mark_as_bought/pages/mark_as_bought_screen_widget.dart';
 import '../../feature/redeem_points/bloc/redeem_points_bloc.dart';
 import '../../feature/redeem_points/pages/redeem_points_screen_widget.dart';
+import '../../feature/verify_product/bloc/verify_product_bloc.dart';
+import '../../feature/verify_product/pages/verify_product_screen_widget.dart';
 import '../utils/shared_preferences_service.dart';
 
 class AppRouteSequence {
@@ -23,6 +25,14 @@ class AppRouteSequence {
       name: Routers.home.name,
       path: Routers.home.path,
       builder: (context, state) => const HomeScreenWidget(),
+    ),
+    GoRoute(
+      name: Routers.verify.name,
+      path: Routers.verify.path,
+      builder: (context, state) => BlocProvider<VerifyProductBloc>(
+        create: (_) => VerifyProductBlocImpl(),
+        child: const VerifyProductScreenWidget(),
+      ),
     ),
     GoRoute(
       name: Routers.redeem.name,
@@ -64,6 +74,7 @@ class AppRouteSequence {
         sharedPreferencesService: _sharedPreferencesService,
       ),
     ),
+    BlocProvider<VerifyProductBloc>(create: (_) => VerifyProductBlocImpl()),
   ];
 
   /// Initially the root path is set to [LoginScreenWidget]
