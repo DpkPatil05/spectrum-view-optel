@@ -17,8 +17,8 @@ exports.getUserSummaryController = async (req, res) => {
 
     const summary = users.map((user) => {
       const totalSold = user.consumedSerialNumbers?.length || 0;
-      const claimedCommission = user.commissionAmount || 0;
-      const pendingCommission = totalSold - claimedCommission;
+      const pendingCommission = user.commissionAmount;
+      const claimedCommission = totalSold - pendingCommission || 0;
 
       return {
         userId: user.userId,
