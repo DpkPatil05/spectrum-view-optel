@@ -10,6 +10,9 @@ class StringConstants {
   // Authentication string constants
   static const login = 'login';
   static const logout = 'logout';
+  static const loading = 'loading';
+  static const failed = 'failed';
+  static const success = 'success';
   static const signUp = 'sign up';
   static const email = 'email';
   static const enterEmail = 'enter email';
