@@ -100,7 +100,7 @@ const AddSerialNumberPage: React.FC = () => {
             <PrimaryInputField
               id="serialNumber"
               label=" Serial Number"
-              name="serial_number"
+              name="serialNumber"
               placeholder="e.g. SN123456789"
               value={formData.serialNumber}
               onChange={handleChange}
