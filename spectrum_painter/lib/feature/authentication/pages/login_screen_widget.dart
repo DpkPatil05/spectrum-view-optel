@@ -108,6 +108,18 @@ class _LoginScreenWidgetState extends State<LoginScreenWidget> {
     );
   }
 
+  void _onEditingComplete() {
+    _unFocusAllNodes();
+    bloc.validate(
+      AuthenticationModel(
+        email: _emailController.text,
+        password: _passwordController.text,
+      ),
+    );
+  }
+
+  void _unFocusAllNodes() => FocusScope.of(context).unfocus();
+
   Future<void> _handleLogin() async {
     final loginData = AuthenticationModel(
       email: _emailController.text,
@@ -169,6 +181,7 @@ class _LoginScreenWidgetState extends State<LoginScreenWidget> {
     return TextField(
       controller: controller,
       obscureText: obscureText,
+      onEditingComplete: _onEditingComplete,
       style: CustomThemeData.defaultTextStyle,
       cursorColor: ColorConstants.primaryTextColor,
       decoration: InputDecoration(
