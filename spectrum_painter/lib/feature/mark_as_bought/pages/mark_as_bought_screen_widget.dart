@@ -70,7 +70,6 @@ class _MarkAsBoughtScreenWidgetState extends State<MarkAsBoughtScreenWidget> {
                     PrimaryTextField(
                       controller: _srnController,
                       errorText: data.errorText,
-                      keyboardType: TextInputType.number,
                       label: 'Enter serial number',
                       hintText: 'e.g. SRN1234',
                       suffixIcon: Icon(Icons.numbers),
