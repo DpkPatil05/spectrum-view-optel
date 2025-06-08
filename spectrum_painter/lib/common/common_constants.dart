@@ -7,6 +7,9 @@ class StringConstants {
   static const appName = 'Spectrum painter';
   static const String fontPrompt = 'Prompt';
 
+  static const baseUrl = 'localhost:3000';
+  static const loginPath = '/auth/login';
+
   // Authentication string constants
   static const login = 'login';
   static const logout = 'logout';

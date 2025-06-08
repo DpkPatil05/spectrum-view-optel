@@ -1,12 +1,15 @@
 import { axiosInstance } from "./axiosInstance";
+import { AuthData } from "@/interfaces/AuthData";
 
-export const getMobileUsersSalesAndCommission = async ({
-  rejectWithValue,
-}: {
-  rejectWithValue: (value: string) => void;
-}) => {
+export const registerUser = async (
+  userData: AuthData,
+  { rejectWithValue }: { rejectWithValue: (value: string) => void }
+) => {
   try {
-    const response = await axiosInstance.get("/verify/users/summary");
+    const response = await axiosInstance.post("/auth/register", {
+      userId: userData.userId.trim(),
+      password: userData.password.trim(),
+    });
 
     return response.data;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

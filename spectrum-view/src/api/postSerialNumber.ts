@@ -6,7 +6,7 @@ export const postSerialNumber = async (
   { rejectWithValue }: { rejectWithValue: (value: string) => void }
 ) => {
   try {
-    const response = await axiosInstance.post("/serial-numbers", {
+    const response = await axiosInstance.post("/verify/serial-numbers", {
       serial_number: formData.serial_number.trim(),
       mrp: parseFloat((formData.mrp ?? "0").toString()),
     });

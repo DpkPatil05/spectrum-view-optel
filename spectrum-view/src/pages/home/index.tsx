@@ -25,6 +25,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import useCovidData from "@/hooks/useCovidData";
 import Loader from "@/components/Loader";
+import AddUsers from "../add-user";
 
 const HomePage: FC = () => {
   const [activeView, setActiveView] = useState<NavItems>(NavItems.Dashboard);
@@ -66,6 +67,16 @@ const HomePage: FC = () => {
             onClick={() => setActiveView(NavItems.Dashboard)}
             className={`transition-colors ${
               activeView === NavItems.Dashboard
+                ? "bg-white/10 text-white"
+                : "text-muted"
+            } hover:text-white`}
+          />
+          <NavItem
+            icon={<PlusCircle className="w-5 h-5" />}
+            label="Add Users"
+            onClick={() => setActiveView(NavItems.AddUsers)}
+            className={`transition-colors ${
+              activeView === NavItems.AddProducts
                 ? "bg-white/10 text-white"
                 : "text-muted"
             } hover:text-white`}
@@ -146,6 +157,7 @@ const HomePage: FC = () => {
         >
           <Toaster richColors position="bottom-right" closeButton />
           {activeView === NavItems.Dashboard && <DashboardPage />}
+          {activeView === NavItems.AddUsers && <AddUsers />}
           {activeView === NavItems.AddProducts && <AddSerialNumberPage />}
           {activeView === NavItems.Settings && (
             <div className="text-muted-foreground">Settings coming soon...</div>

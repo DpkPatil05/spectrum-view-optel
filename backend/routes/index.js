@@ -12,8 +12,11 @@ const { getStockSummaryController } = require("../controllers/stockController");
 const {
   getUserSummaryController,
 } = require("../controllers/userSummaryController");
+const { loginController, registerController } = require("../controllers/authController");
 const router = express.Router();
 
+router.post("/auth/register", registerController);
+router.post("/auth/login", loginController);
 router.post("/verify/serial-numbers", postSerialNumberController);
 router.get("/verify/serial-numbers/:serialNumber", getSerialNumberController);
 router.post("/verify/consume ", consumeSerialNumberController);

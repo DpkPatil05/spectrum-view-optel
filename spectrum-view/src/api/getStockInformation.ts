@@ -6,7 +6,7 @@ export const getStockInformation = async ({
   rejectWithValue: (value: string) => void;
 }) => {
   try {
-    const response = await axiosInstance.get("/stock-summary");
+    const response = await axiosInstance.get("/verify/stock-summary");
 
     return response.data;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

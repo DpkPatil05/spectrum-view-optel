@@ -1,3 +1,6 @@
+import 'package:http/http.dart' as http;
+import 'package:spectrum_painter/common/common_constants.dart';
+
 class LoginRepository {
   // Private constructor
   LoginRepository._internal();
@@ -9,16 +12,24 @@ class LoginRepository {
   static LoginRepository get instance => _instance;
 
   // Instance method
-  Future<String?> login(String email, String password) async {
-    String? response;
+  Future<http.Response?> login(String email, String password) async {
     try {
-      // TODO: implement actual login logic
-      print('Logging in....');
+      var url = Uri.http(StringConstants.baseUrl, StringConstants.loginPath);
+      final response = await http.post(
+        url,
+        body: {'userId': email, 'password': password},
+      );
+      return response;
+    } on http.ClientException catch (e) {
+      // Handle specific HTTP client errors
+      print('ClientException: ${e.message}');
     } on Exception catch (e) {
-      response = 'Exception: ${e.toString()}';
+      // Handle general exceptions
+      print('Exception during login: ${e.toString()}');
     } catch (e) {
-      response = 'There was some problem logging in, please retry';
+      // Catch-all for any other errors
+      print('Unexpected error: $e');
     }
-    return response;
+    return null;
   }
 }

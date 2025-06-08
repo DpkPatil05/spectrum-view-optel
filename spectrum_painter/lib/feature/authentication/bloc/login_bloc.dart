@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:http/http.dart' as http;
 import 'package:progress_state_button/progress_button.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:spectrum_painter/common/repositories/authentication/login_repository.dart';
@@ -43,7 +44,7 @@ class LoginBlocImpl extends LoginBloc {
     final String? validator = validateData(user);
     LoginScreenState currentState = _state.value;
     final isValidData = validator == null;
-    late final String? loginResponse;
+    late final http.Response? loginResponse;
 
     currentState = currentState.copyWith(
       user: user,
