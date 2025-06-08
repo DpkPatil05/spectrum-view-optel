@@ -25,7 +25,6 @@ exports.getPendingCommissionController = async (req, res) => {
 
     // Fetch consumed serial numbers and calculate pending commission
     const user = await User.findOne({ userId });
-    l̥;
     const pendingCommission = user.commissionAmount || 0;
 
     // Respond with the pending commission
