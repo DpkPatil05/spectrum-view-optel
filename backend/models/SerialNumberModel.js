@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const SerialNumberSchema = new mongoose.Schema(
   {
-    serial_number: {
+    serialNumber: {
       type: String,
       required: true,
       unique: true,
