@@ -10,6 +10,7 @@ import '../../../common/routes/routes.dart';
 import '../../../common/theme/theme_data.dart';
 import '../../../common/ui/buttons/primary_loading_button.dart';
 import '../../../common/ui/text_fields/error_message.dart';
+import '../../../common/ui/text_fields/primary_text_field.dart';
 import '../bloc/login_bloc.dart';
 import '../model/authentication_model.dart';
 import '../model/login_screen_state.dart';
@@ -25,6 +26,8 @@ class _LoginScreenWidgetState extends State<LoginScreenWidget> {
   late final LoginBloc bloc;
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final FocusNode _emailFocusNode = FocusNode();
+  final FocusNode _passwordFocusNode = FocusNode();
   final BehaviorSubject<ButtonState> _buttonStateController =
       BehaviorSubject<ButtonState>.seeded(ButtonState.idle);
 
@@ -70,15 +73,31 @@ class _LoginScreenWidgetState extends State<LoginScreenWidget> {
                   children: [
                     CustomThemeData.headerText(text: StringConstants.login),
                     const SizedBox(height: SpaceConstants.space20),
-                    _buildTextField(
-                      controller: _emailController,
-                      hintText: StringConstants.enterEmail,
+
+                    /// Email text input field
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        bottom: SpaceConstants.space40,
+                      ),
+                      child: PrimaryTextField(
+                        controller: _emailController,
+                        label: StringConstants.email,
+                        hintText: StringConstants.enterEmail,
+                        focusNode: _emailFocusNode,
+                        onEditingComplete: _onEditingComplete,
+                        suffixIcon: Icon(LucideIcons.mail),
+                      ),
                     ),
-                    const SizedBox(height: SpaceConstants.space20),
-                    _buildTextField(
+
+                    /// Password text input field
+                    PrimaryTextField(
                       controller: _passwordController,
+                      label: StringConstants.password,
                       hintText: StringConstants.enterPassword,
                       obscureText: true,
+                      focusNode: _passwordFocusNode,
+                      onEditingComplete: _onEditingComplete,
+                      suffixIcon: Icon(LucideIcons.key),
                     ),
 
                     /// Error text
@@ -143,14 +162,7 @@ class _LoginScreenWidgetState extends State<LoginScreenWidget> {
     final data = bloc.stateStream.value;
     final isUserLoggedIn = data.isUserLoggedIn;
     if (isUserLoggedIn && context.mounted) {
-      /// This delay is to hold the screen for [SpaceConstants.defaultDelay]
-      /// to show success.
-      /// This is just for better UX.
-      ///
-      /// Duration is 4s.
-      Future.delayed(
-        const Duration(seconds: SpaceConstants.defaultDelay),
-      ).whenComplete(() => context.pushReplacement('/${Routers.home.path}'));
+      context.pushReplacement('/${Routers.home.path}');
     }
   }
 
@@ -172,29 +184,4 @@ class _LoginScreenWidgetState extends State<LoginScreenWidget> {
       ),
     ],
   );
-
-  TextField _buildTextField({
-    required TextEditingController controller,
-    required String hintText,
-    bool obscureText = false,
-  }) {
-    return TextField(
-      controller: controller,
-      obscureText: obscureText,
-      onEditingComplete: _onEditingComplete,
-      style: CustomThemeData.defaultTextStyle,
-      cursorColor: ColorConstants.primaryTextColor,
-      decoration: InputDecoration(
-        contentPadding: EdgeInsets.only(left: SpaceConstants.space20),
-        hintText: hintText,
-        hintStyle: TextStyle(color: ColorConstants.secondaryTextColor),
-        enabledBorder: CustomThemeData.defaultOutlineInputBorder(),
-        focusedBorder: CustomThemeData.defaultOutlineInputBorder(
-          color: ColorConstants.primaryWhite,
-        ),
-        filled: true,
-        fillColor: ColorConstants.secondary,
-      ),
-    );
-  }
 }
