@@ -90,6 +90,10 @@ class LoginBlocImpl extends LoginBloc {
           key: SharedPreferencesKeyConstants.loginKey,
           value: true,
         );
+        await _sharedPreferencesService.setSharedPrefsData(
+          key: SharedPreferencesKeyConstants.userIdKey,
+          value: user.email!,
+        );
       }
 
       currentState = currentState.copyWith(

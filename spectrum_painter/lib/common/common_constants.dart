@@ -53,6 +53,7 @@ class ImageConstants {}
 /// All the keys that will be used for the SharedPreferences
 class SharedPreferencesKeyConstants {
   static const loginKey = 'loginKey';
+  static const userIdKey = 'userIdKey';
 }
 
 /// App routes
