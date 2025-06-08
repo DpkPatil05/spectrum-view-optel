@@ -1,0 +1,199 @@
+{
+	"info": {
+		"_postman_id": "2a8dfa84-1040-458a-bb93-2a8c6b13830f",
+		"name": "SpectrumView",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17171651"
+	},
+	"item": [
+		{
+			"name": "/verify/serial-numbers",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \"serialNumber\": \"SDFd342\", \"mrp\": 213123 }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/verify/serial-numbers",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"verify",
+						"serial-numbers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/verify/serial-numbers/:serialNumber",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/verify/serial-numbers/SDFd342",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"verify",
+						"serial-numbers",
+						"SDFd342"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/verify/consume",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \"userId\": \"test@gmail.com\", \"serialNumber\": \"SDFd342\" }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/verify/consume",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"verify",
+						"consume"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/commission/pending",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:3000/verify/users/patildeepak188@gmail.com/commission/pending",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"verify",
+						"users",
+						"patildeepak188@gmail.com",
+						"commission",
+						"pending"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/commission/redeem",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \"pointsToRedeem\": 1 }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/verify/users/patildeepak188@gmail.com/commission/redeem",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"verify",
+						"users",
+						"patildeepak188@gmail.com",
+						"commission",
+						"redeem"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/verify/stock-summary",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:3000/verify/stock-summary",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"verify",
+						"stock-summary"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/verify/users/summary",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/verify/users/summary",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"verify",
+						"users",
+						"summary"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
