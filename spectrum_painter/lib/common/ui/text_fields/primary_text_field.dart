@@ -14,6 +14,8 @@ class PrimaryTextField extends StatelessWidget {
     this.onFieldSubmitted,
     this.onTap,
     this.focusNode,
+    this.keyboardType,
+    this.errorText,
     required this.controller,
     required this.label,
     required this.suffixIcon,
@@ -23,6 +25,8 @@ class PrimaryTextField extends StatelessWidget {
   final String label;
   final Icon suffixIcon;
   final TextEditingController controller;
+  final TextInputType? keyboardType;
+  final String? errorText;
   final String? defaultText;
   final String? hintText;
   final FocusNode? focusNode;
@@ -41,6 +45,7 @@ class PrimaryTextField extends StatelessWidget {
       child: TextFormField(
         controller: controller,
         initialValue: defaultText,
+        keyboardType: keyboardType,
         obscureText: obscureText,
         focusNode: focusNode,
         onTap: onTap,
@@ -58,6 +63,7 @@ class PrimaryTextField extends StatelessWidget {
           focusedBorder: CustomThemeData.defaultOutlineInputBorder(
             color: ColorConstants.secondary,
           ),
+          errorText: errorText,
           hintText: hintText,
           labelText: label,
           labelStyle: CustomThemeData.defaultTextStyle,

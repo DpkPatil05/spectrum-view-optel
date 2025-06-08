@@ -28,7 +28,9 @@ class AppRouteSequence {
       name: Routers.redeem.name,
       path: Routers.redeem.path,
       builder: (context, state) => BlocProvider<RedeemPointsBloc>(
-        create: (_) => RedeemPointsBlocImpl(),
+        create: (_) => RedeemPointsBlocImpl(
+          sharedPreferencesService: _sharedPreferencesService,
+        ),
         child: const RedeemPointsScreenWidget(),
       ),
     ),
@@ -50,7 +52,11 @@ class AppRouteSequence {
       create: (_) =>
           LoginBlocImpl(sharedPreferencesService: _sharedPreferencesService),
     ),
-    BlocProvider<RedeemPointsBloc>(create: (_) => RedeemPointsBlocImpl()),
+    BlocProvider<RedeemPointsBloc>(
+      create: (_) => RedeemPointsBlocImpl(
+        sharedPreferencesService: _sharedPreferencesService,
+      ),
+    ),
     BlocProvider<MarkAsBoughtBloc>(create: (_) => MarkAsBoughtBlocImpl()),
   ];
 
