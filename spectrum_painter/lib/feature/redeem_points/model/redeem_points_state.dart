@@ -1,13 +1,13 @@
 class RedeemPointsScreenState {
   RedeemPointsScreenState({
     this.isLoading = false,
-    this.success,
     this.errorText = '',
+    this.success,
   });
 
   final bool isLoading;
-  final bool? success;
   final String errorText;
+  final bool? success;
 
   static RedeemPointsScreenState get defaultState =>
       RedeemPointsScreenState(isLoading: false, success: null, errorText: '');

@@ -4,9 +4,15 @@ import '../../common_constants.dart';
 import '../../theme/theme_data.dart';
 
 class PrimaryButton extends StatelessWidget {
-  const PrimaryButton({super.key, this.onPressed, required this.text});
+  const PrimaryButton({
+    super.key,
+    this.onPressed,
+    this.color,
+    required this.text,
+  });
 
   final String text;
+  final Color? color;
   final Function()? onPressed;
 
   @override
@@ -15,7 +21,9 @@ class PrimaryButton extends StatelessWidget {
       onPressed: onPressed,
       autofocus: true,
       style: ButtonStyle(
-        backgroundColor: WidgetStateProperty.all<Color>(ColorConstants.primary),
+        backgroundColor: WidgetStateProperty.all<Color>(
+          color ?? ColorConstants.tertiary,
+        ),
         minimumSize: WidgetStateProperty.all<Size>(
           const Size(
             SpaceConstants.minimumButtonWidth,

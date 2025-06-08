@@ -45,7 +45,7 @@ class _RedeemPointsScreenWidgetState extends State<RedeemPointsScreenWidget> {
                         'Points redeemed successfully!',
                         style: TextStyle(color: Colors.white),
                       ),
-                      backgroundColor: Colors.green,
+                      backgroundColor: ColorConstants.success,
                     ),
                   );
                 } else if (data.errorText.isNotEmpty) {
@@ -55,7 +55,7 @@ class _RedeemPointsScreenWidgetState extends State<RedeemPointsScreenWidget> {
                         data.errorText,
                         style: const TextStyle(color: Colors.white),
                       ),
-                      backgroundColor: Colors.red,
+                      backgroundColor: ColorConstants.error,
                     ),
                   );
                 }
@@ -86,7 +86,7 @@ class _RedeemPointsScreenWidgetState extends State<RedeemPointsScreenWidget> {
                       height: SpaceConstants.minimumButtonHeight,
                       child: PrimaryButton(
                         onPressed: () async {
-                          await _redeemPoints(data.isLoading, data);
+                          await _redeemPoints(data.isLoading);
                         },
                         text: 'Redeem Now',
                       ),
@@ -102,10 +102,7 @@ class _RedeemPointsScreenWidgetState extends State<RedeemPointsScreenWidget> {
     );
   }
 
-  Future<void> _redeemPoints(
-    bool isLoading,
-    RedeemPointsScreenState data,
-  ) async {
+  Future<void> _redeemPoints(bool isLoading) async {
     FocusManager.instance.primaryFocus?.unfocus();
     isLoading ? null : await bloc.redeemPoints(_pointsController.text.trim());
     _pointsController.clear();

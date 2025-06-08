@@ -9,6 +9,7 @@ class StringConstants {
 
   static const baseUrl = '10.0.2.2:3000';
   static const loginPath = '/auth/login';
+  static const consumePath = '/verify/consume';
 
   // Authentication string constants
   static const login = 'login';
