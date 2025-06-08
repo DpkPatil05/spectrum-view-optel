@@ -170,6 +170,7 @@ class _LoginScreenWidgetState extends State<LoginScreenWidget> {
       controller: controller,
       obscureText: obscureText,
       style: CustomThemeData.defaultTextStyle,
+      cursorColor: ColorConstants.primaryTextColor,
       decoration: InputDecoration(
         contentPadding: EdgeInsets.only(left: SpaceConstants.space20),
         hintText: hintText,

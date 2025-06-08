@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:progress_state_button/progress_button.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:spectrum_painter/common/repositories/authentication/login_repository.dart';
 
 import '../../../common/common_constants.dart';
 import '../../../common/utils/shared_preferences_service.dart';
@@ -40,9 +41,9 @@ class LoginBlocImpl extends LoginBloc {
   @override
   Future<void> login(AuthenticationModel user) async {
     final String? validator = validateData(user);
-    // TODO (Dpk): Need to handle login and use actual login data
     LoginScreenState currentState = _state.value;
     final isValidData = validator == null;
+    late final String? loginResponse;
     currentState = currentState.copyWith(
       user: user,
       validationError: validator,
@@ -53,14 +54,20 @@ class LoginBlocImpl extends LoginBloc {
           loginButtonState: ButtonState.loading,
         );
         _state.add(currentState);
-        // Mock server check delay to test button
-        await Future.delayed(const Duration(seconds: 4));
+
+        if (validator == null) {
+          loginResponse = await LoginRepository.instance.login(
+            user.email!,
+            user.password!,
+          );
+        }
+
         await _sharedPreferencesService.setSharedPrefsData(
           key: SharedPreferencesKeyConstants.loginKey,
-          value: true,
+          value: loginResponse != null,
         );
-        // TODO(Dpk): Check if actually logged in
-        final isUserLoggedIn = validator == null;
+
+        final isUserLoggedIn = loginResponse != null;
         final loginButtonState = isUserLoggedIn
             ? ButtonState.success
             : ButtonState.fail;
