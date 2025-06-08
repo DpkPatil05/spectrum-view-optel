@@ -30,7 +30,7 @@ class LoginScreenState {
   }) => LoginScreenState(
     user: user ?? this.user,
     loginButtonState: loginButtonState ?? this.loginButtonState,
-    validationError: validationError ?? this.validationError,
+    validationError: validationError,
     isUserLoggedIn: isUserLoggedIn ?? this.isUserLoggedIn,
   );
 }

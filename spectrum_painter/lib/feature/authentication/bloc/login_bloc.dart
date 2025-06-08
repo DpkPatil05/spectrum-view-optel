@@ -44,6 +44,7 @@ class LoginBlocImpl extends LoginBloc {
     LoginScreenState currentState = _state.value;
     final isValidData = validator == null;
     late final String? loginResponse;
+
     currentState = currentState.copyWith(
       user: user,
       validationError: validator,
@@ -52,6 +53,7 @@ class LoginBlocImpl extends LoginBloc {
       try {
         currentState = currentState.copyWith(
           loginButtonState: ButtonState.loading,
+          validationError: validator,
         );
         _state.add(currentState);
 
@@ -75,12 +77,14 @@ class LoginBlocImpl extends LoginBloc {
         currentState = currentState.copyWith(
           isUserLoggedIn: isUserLoggedIn,
           loginButtonState: loginButtonState,
+          validationError: validator,
         );
       } on Exception catch (e) {
         debugPrint(e.toString());
         currentState = currentState.copyWith(
           isUserLoggedIn: false,
           loginButtonState: ButtonState.fail,
+          validationError: validator,
         );
       }
     }
