@@ -14,7 +14,7 @@ const initialState: AddSerialNumberFormState = {
   success: false,
   error: null,
   formData: {
-    serial_number: "",
+    serialNumber: "",
     mrp: "",
   },
 };
@@ -28,7 +28,7 @@ const addSerialNumberSlice = createSlice({
     },
     resetState: (state) => {
       state.formData = {
-        serial_number: "",
+        serialNumber: "",
         mrp: "",
       };
       state.loading = false;

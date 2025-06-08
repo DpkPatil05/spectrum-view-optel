@@ -7,7 +7,7 @@ export const postSerialNumber = async (
 ) => {
   try {
     const response = await axiosInstance.post("/verify/serial-numbers", {
-      serial_number: formData.serial_number.trim(),
+      serialNumber: formData.serialNumber.trim(),
       mrp: parseFloat((formData.mrp ?? "0").toString()),
     });
 

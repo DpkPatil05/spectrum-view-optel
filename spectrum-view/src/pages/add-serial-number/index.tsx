@@ -20,7 +20,7 @@ const AddSerialNumberPage: React.FC = () => {
   );
 
   const [errors, setErrors] = useState<Partial<SerialNumbersData>>({
-    serial_number: "",
+    serialNumber: "",
     mrp: "",
   });
 
@@ -28,8 +28,8 @@ const AddSerialNumberPage: React.FC = () => {
     const newErrors: Partial<SerialNumbersData> = {};
     let isValid = true;
 
-    if (formData.serial_number.trim().length < 5) {
-      newErrors.serial_number =
+    if (formData.serialNumber.trim().length < 5) {
+      newErrors.serialNumber =
         "Serial number must be at least 5 characters long.";
       isValid = false;
     }
@@ -53,7 +53,7 @@ const AddSerialNumberPage: React.FC = () => {
 
   const handleReset = () => {
     dispatch(resetState());
-    setErrors({ serial_number: "", mrp: "" });
+    setErrors({ serialNumber: "", mrp: "" });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -102,9 +102,9 @@ const AddSerialNumberPage: React.FC = () => {
               label=" Serial Number"
               name="serial_number"
               placeholder="e.g. SN123456789"
-              value={formData.serial_number}
+              value={formData.serialNumber}
               onChange={handleChange}
-              errors={errors.serial_number}
+              errors={errors.serialNumber}
             />
             <PrimaryInputField
               id="cost"
