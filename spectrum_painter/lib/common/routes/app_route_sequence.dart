@@ -38,7 +38,9 @@ class AppRouteSequence {
       name: Routers.markBought.name,
       path: Routers.markBought.path,
       builder: (context, state) => BlocProvider<MarkAsBoughtBloc>(
-        create: (_) => MarkAsBoughtBlocImpl(),
+        create: (_) => MarkAsBoughtBlocImpl(
+          sharedPreferencesService: _sharedPreferencesService,
+        ),
         child: const MarkAsBoughtScreenWidget(),
       ),
     ),
@@ -57,7 +59,11 @@ class AppRouteSequence {
         sharedPreferencesService: _sharedPreferencesService,
       ),
     ),
-    BlocProvider<MarkAsBoughtBloc>(create: (_) => MarkAsBoughtBlocImpl()),
+    BlocProvider<MarkAsBoughtBloc>(
+      create: (_) => MarkAsBoughtBlocImpl(
+        sharedPreferencesService: _sharedPreferencesService,
+      ),
+    ),
   ];
 
   /// Initially the root path is set to [LoginScreenWidget]
