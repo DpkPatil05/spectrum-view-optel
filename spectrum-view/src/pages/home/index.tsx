@@ -72,7 +72,7 @@ const HomePage: FC = () => {
             } hover:text-white`}
           />
           <NavItem
-            icon={<PlusCircle className="w-5 h-5" />}
+            icon={<UserCircle className="w-5 h-5" />}
             label="Add Users"
             onClick={() => setActiveView(NavItems.AddUsers)}
             className={`transition-colors ${
