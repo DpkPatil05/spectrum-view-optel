@@ -26,13 +26,16 @@ class Routes {
   );
 }
 
-enum Routers { root, home }
+enum Routers { root, home, verify, markBought, redeem }
 
 extension RoutersExtension on Routers {
   String get path {
     return switch (this) {
       Routers.root => RouteConstants.root,
       Routers.home => RouteConstants.home,
+      Routers.verify => RouteConstants.verify,
+      Routers.markBought => RouteConstants.markBought,
+      Routers.redeem => RouteConstants.redeem,
     };
   }
 }

@@ -61,6 +61,9 @@ class RouteConstants {
 
   static const root = '/';
   static const home = 'home';
+  static const verify = 'verify';
+  static const markBought = 'mark-bought';
+  static const redeem = 'redeem';
 }
 
 /// All the colors used across the application

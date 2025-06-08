@@ -5,8 +5,11 @@ import 'package:spectrum_painter/common/routes/routes.dart';
 
 import '../../feature/authentication/bloc/login_bloc.dart';
 import '../../feature/authentication/pages/login_screen_widget.dart';
-import '../../feature/home/bloc/home_bloc.dart';
 import '../../feature/home/pages/home_screen_widget.dart';
+import '../../feature/mark_as_bought/bloc/mark_as_bought_bloc.dart';
+import '../../feature/mark_as_bought/pages/mark_as_bought_screen_widget.dart';
+import '../../feature/redeem_points/bloc/redeem_points_bloc.dart';
+import '../../feature/redeem_points/pages/redeem_points_screen_widget.dart';
 import '../utils/shared_preferences_service.dart';
 
 class AppRouteSequence {
@@ -19,12 +22,22 @@ class AppRouteSequence {
     GoRoute(
       name: Routers.home.name,
       path: Routers.home.path,
-      builder: (context, state) => BlocProvider<HomeBloc>(
-        create: (_) => HomeBlocImpl(
-          null,
-          sharedPreferencesService: _sharedPreferencesService,
-        ),
-        child: const HomeScreenWidget(),
+      builder: (context, state) => const HomeScreenWidget(),
+    ),
+    GoRoute(
+      name: Routers.redeem.name,
+      path: Routers.redeem.path,
+      builder: (context, state) => BlocProvider<RedeemPointsBloc>(
+        create: (_) => RedeemPointsBlocImpl(),
+        child: const RedeemPointsScreenWidget(),
+      ),
+    ),
+    GoRoute(
+      name: Routers.markBought.name,
+      path: Routers.markBought.path,
+      builder: (context, state) => BlocProvider<MarkAsBoughtBloc>(
+        create: (_) => MarkAsBoughtBlocImpl(),
+        child: const MarkAsBoughtScreenWidget(),
       ),
     ),
   ];
@@ -37,12 +50,8 @@ class AppRouteSequence {
       create: (_) =>
           LoginBlocImpl(sharedPreferencesService: _sharedPreferencesService),
     ),
-    BlocProvider<HomeBloc>(
-      create: (_) => HomeBlocImpl(
-        null,
-        sharedPreferencesService: _sharedPreferencesService,
-      ),
-    ),
+    BlocProvider<RedeemPointsBloc>(create: (_) => RedeemPointsBlocImpl()),
+    BlocProvider<MarkAsBoughtBloc>(create: (_) => MarkAsBoughtBlocImpl()),
   ];
 
   /// Initially the root path is set to [LoginScreenWidget]
