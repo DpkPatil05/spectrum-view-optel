@@ -4,16 +4,16 @@ const User = require("../models/UserModel");
 /**
  * Handles the creation of a new serial number record in the database.
  *
- * This controller validates the request body to ensure `serial_number` and `mrp` are provided.
- * If the `serial_number` already exists, it returns an error response.
+ * This controller validates the request body to ensure `serialNumber` and `mrp` are provided.
+ * If the `serialNumber` already exists, it returns an error response.
  * Otherwise, it creates a new serial number record with default values for `consumedBy`.
  * Additionally, it includes error handling for unique index violations and logs server errors.
  *
  * @async
  * @function postSerialNumberController
  * @param {Object} req - The HTTP request object.
- * @param {Object} req.body - The request body containing `serial_number` and `mrp`.
- * @param {string} req.body.serial_number - The serial number to be added.
+ * @param {Object} req.body - The request body containing `serialNumber` and `mrp`.
+ * @param {string} req.body.serialNumber - The serial number to be added.
  * @param {number} req.body.mrp - The MRP (Maximum Retail Price) associated with the serial number.
  * @param {Object} res - The HTTP response object.
  * @returns {Promise<void>} Sends a JSON response indicating success or failure.
@@ -22,16 +22,16 @@ const User = require("../models/UserModel");
  * or violates unique constraints. Returns a 500 status code for unexpected server errors.
  */
 exports.postSerialNumberController = async (req, res) => {
-  const { serial_number, mrp } = req.body;
+  const { serialNumber, mrp } = req.body;
 
-  if (!serial_number || !mrp) {
+  if (!serialNumber || !mrp) {
     return res
       .status(400)
-      .json({ message: "serial_number and mrp are required", success: false });
+      .json({ message: "serialNumber and mrp are required", success: false });
   }
 
   try {
-    const existingSerial = await SerialNumber.findOne({ serial_number });
+    const existingSerial = await SerialNumber.findOne({ serialNumber });
     if (existingSerial) {
       return res.status(400).json({
         message: "This serial number already exists",
@@ -41,7 +41,7 @@ exports.postSerialNumberController = async (req, res) => {
     }
 
     const newSerial = new SerialNumber({
-      serial_number,
+      serialNumber,
       mrp,
       consumedBy: "",
     });
@@ -139,7 +139,7 @@ exports.consumeSerialNumberController = async (req, res) => {
 
   try {
     const existingSerial = await SerialNumber.findOne({
-      serial_number: serialNumber,
+      serialNumber: serialNumber,
     });
     if (!existingSerial) {
       return res.status(404).json({

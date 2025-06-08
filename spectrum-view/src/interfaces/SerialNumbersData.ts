@@ -1,5 +1,5 @@
 export interface SerialNumbersData {
-  serial_number: string;
+  serialNumber: string;
   mrp?: number | string;
   createdAt?: string; // Optional, can be used for timestamps
 }
