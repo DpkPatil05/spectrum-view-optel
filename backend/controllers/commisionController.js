@@ -25,7 +25,8 @@ exports.getPendingCommissionController = async (req, res) => {
 
     // Fetch consumed serial numbers and calculate pending commission
     const user = await User.findOne({ userId });
-    const pendingCommission = user.consumedSerialNumbers?.length || 0;
+    l̥;
+    const pendingCommission = user.commissionAmount || 0;
 
     // Respond with the pending commission
     res.status(201).json({ pendingCommission, success: true });
@@ -82,7 +83,7 @@ exports.redeemCommissionController = async (req, res) => {
     }
 
     // Calculate pending commission
-    const pendingCommission = user.consumedSerialNumbers?.length || 0;
+    const pendingCommission = user.commissionAmount || 0;
 
     if (pointsToRedeem > pendingCommission) {
       return res.status(400).json({

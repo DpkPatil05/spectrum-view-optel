@@ -111,18 +111,18 @@ exports.getSerialNumberController = async (req, res) => {
 };
 
 /**
- * Controller to handle the consumption of a serial number by a user.
+ * Handles the consumption of a serial number by a user.
  *
  * Validates that both `userId` and `serialNumber` are present in the request body.
- * Checks if the serial number exists and if it has already been consumed by the user.
- * If not, marks the serial number as consumed by the user, updates its status,
- * and increments the user's commission amount.
+ * Checks if the serial number exists and whether the user has already consumed it.
+ * If not already consumed, adds the user to the `consumedBy` array, decrements quantity,
+ * updates the serial number's status if needed, and awards commission to the user.
  *
  * @async
  * @function consumeSerialNumberController
  * @param {Object} req - Express request object containing `userId` and `serialNumber` in the body.
  * @param {Object} res - Express response object.
- * @returns {Promise<void>} Sends a JSON response indicating the result of the operation.
+ * @returns {Promise<void>} Sends a JSON response indicating success, failure, and commission earned.
  *
  * @throws {Error} Returns a 400 or 404 status code for validation errors or missing resources,
  * and a 500 status code for unexpected server errors.
@@ -141,7 +141,6 @@ exports.consumeSerialNumberController = async (req, res) => {
     const existingSerial = await SerialNumber.findOne({
       serial_number: serialNumber,
     });
-
     if (!existingSerial) {
       return res.status(404).json({
         message: "Serial number not found.",
@@ -150,27 +149,7 @@ exports.consumeSerialNumberController = async (req, res) => {
       });
     }
 
-    if (
-      existingSerial.consumedBy &&
-      existingSerial.consumedBy.includes(userId)
-    ) {
-      return res.status(400).json({
-        message: "This serial number has already been consumed by this user.",
-        success: false,
-        commissionEarned: 0,
-      });
-    }
-
-    // Mark the serial number as consumed by the user
-    existingSerial.consumedBy = userId;
-    existingSerial.status = "consumed";
-    await existingSerial.save();
-
-    const commissionEarned = 10;
-
-    // Update the user's commission in the UserSchema
     const user = await User.findById(userId);
-
     if (!user) {
       return res.status(404).json({
         message: "User not found.",
@@ -179,6 +158,31 @@ exports.consumeSerialNumberController = async (req, res) => {
       });
     }
 
+    let commissionEarned = 0;
+
+    // Only award commission if user hasn't already consumed this serial
+    const hasConsumedSerial = existingSerial.consumedBy?.includes(userId);
+    if (!hasConsumedSerial) {
+      commissionEarned = 1;
+
+      existingSerial.consumedBy = existingSerial.consumedBy || [];
+      existingSerial.consumedBy.push(userId);
+    }
+
+    // Add serialNumber to user's consumedSerialNumbers
+    user.consumedSerialNumbers = user.consumedSerialNumbers || [];
+    user.consumedSerialNumbers.push(serialNumber);
+
+    // Decrement quantity
+    existingSerial.quantity = Math.max((existingSerial.quantity || 0) - 1, 0);
+
+    // Update status if quantity is 0
+    if (existingSerial.quantity === 0) {
+      existingSerial.status = "outOfStock";
+    }
+
+    // Save both documents
+    await existingSerial.save();
     user.commissionAmount = (user.commissionAmount || 0) + commissionEarned;
     await user.save();
 
@@ -188,9 +192,10 @@ exports.consumeSerialNumberController = async (req, res) => {
       commissionEarned,
     });
   } catch (error) {
-    console.error("Server Error:", error); // Log the detailed error
-    res
-      .status(500)
-      .json({ message: "An internal server error occurred.", success: false });
+    console.error("Server Error:", error);
+    res.status(500).json({
+      message: "An internal server error occurred.",
+      success: false,
+    });
   }
 };
