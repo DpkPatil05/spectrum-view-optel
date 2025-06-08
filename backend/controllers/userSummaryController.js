@@ -16,9 +16,12 @@ exports.getUserSummaryController = async (req, res) => {
     const users = await User.find();
 
     const summary = users.map((user) => {
-      const totalSold = user.consumedSerialNumbers?.length || 0;
+      const totalSold = user.consumedSerialNumbers?.length || 0; 
+      const totalUniqueSold = Array.isArray(user.consumedSerialNumbers)
+        ? new Set(user.consumedSerialNumbers).size
+        : 0;
       const pendingCommission = user.commissionAmount;
-      const claimedCommission = totalSold - pendingCommission || 0;
+      const claimedCommission = totalUniqueSold - pendingCommission || 0;
 
       return {
         userId: user.userId,
