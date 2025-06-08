@@ -43,8 +43,11 @@ exports.postSerialNumberController = async (req, res) => {
     const newSerial = new SerialNumber({
       serialNumber,
       mrp,
-      consumedBy: "",
+      consumedBy: [],
+      quantity: 10, // Default quantity
+      status: "inStock", // Default status
     });
+
     await newSerial.save();
     res.status(201).json({
       message: "Serial number added successfully",

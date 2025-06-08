@@ -16,6 +16,8 @@ abstract class MarkAsBoughtBloc extends Cubit<MarkAsBoughtScreenState> {
 
   Future<void> markAsBought(String serialNumber);
 
+  void resetState();
+
   ValueStream<MarkAsBoughtScreenState> get stateStream;
 }
 
@@ -172,5 +174,10 @@ class MarkAsBoughtBlocImpl extends MarkAsBoughtBloc {
     } catch (_) {
       return 'Unexpected error occurred.';
     }
+  }
+
+  @override
+  void resetState() {
+    _state.add(MarkAsBoughtScreenState.defaultState);
   }
 }

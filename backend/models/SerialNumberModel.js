@@ -21,6 +21,7 @@ const SerialNumberSchema = new mongoose.Schema(
       type: String,
       enum: ["inStock", "outOfStock"],
       default: "inStock",
+      required: true,
     },
   },
   { timestamps: true }

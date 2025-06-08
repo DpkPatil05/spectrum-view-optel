@@ -73,6 +73,9 @@ class _MarkAsBoughtScreenWidgetState extends State<MarkAsBoughtScreenWidget> {
                       label: 'Enter serial number',
                       hintText: 'e.g. SRN1234',
                       suffixIcon: Icon(Icons.numbers),
+                      onChanged: (value) {
+                        bloc.resetState();
+                      },
                     ),
                     const SizedBox(height: 24),
                     SizedBox(
