@@ -24,14 +24,14 @@ class VerifyProductBlocImpl extends VerifyProductBloc {
   ValueStream<VerifyProductScreenState> get stateStream => _state.stream;
 
   @override
-  Future<void> verifyProduct(String serialNumber) async {
+  Future<void> verifyProduct(String url) async {
     _state.add(
       _state.value.copyWith(isLoading: true, errorText: '', isVerified: null),
     );
 
     try {
       final response = await VerifyProductRepository.instance.verifyProduct(
-        serialNumber,
+        url,
       );
 
       if (response == null) {

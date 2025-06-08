@@ -36,7 +36,7 @@ class _RedeemPointsScreenWidgetState extends State<RedeemPointsScreenWidget> {
           builder: (context, snapshot) {
             if (snapshot.hasData && snapshot.data != null) {
               final data = snapshot.requireData;
-              // Show snackbar on success
+              // Show snackbar
               WidgetsBinding.instance.addPostFrameCallback((_) {
                 if (data.success == true) {
                   ScaffoldMessenger.of(context).showSnackBar(

@@ -1,5 +1,6 @@
 import 'package:http/http.dart' as http;
-import 'package:spectrum_painter/common/common_constants.dart';
+
+import '../../common_constants.dart';
 
 class VerifyProductRepository {
   // Private constructor
@@ -13,10 +14,17 @@ class VerifyProductRepository {
   static VerifyProductRepository get instance => _instance;
 
   // Instance method
-  Future<http.Response?> verifyProduct(String serialNumber) async {
+  Future<http.Response?> verifyProduct(String data) async {
     try {
-      final String verifyProductApiPath =
-          '/verify/serial-numbers/$serialNumber';
+      String verifyProductApiPath = '';
+      if (data.contains('http://10.0.2.2:3000')) {
+        verifyProductApiPath = data.replaceAll(
+          'http://${StringConstants.baseUrl}',
+          '',
+        );
+      } else {
+        verifyProductApiPath = '/verify/serial-numbers/$data';
+      }
       var url = Uri.http(StringConstants.baseUrl, verifyProductApiPath);
       final response = await http.get(url);
       return response;
