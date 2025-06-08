@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:http/http.dart' as http;
 import 'package:spectrum_painter/common/common_constants.dart';
 
@@ -17,7 +19,8 @@ class LoginRepository {
       var url = Uri.http(StringConstants.baseUrl, StringConstants.loginPath);
       final response = await http.post(
         url,
-        body: {'userId': email, 'password': password},
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({'userId': email, 'password': password}),
       );
       return response;
     } on http.ClientException catch (e) {

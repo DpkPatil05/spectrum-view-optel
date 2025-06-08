@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -44,51 +45,67 @@ class LoginBlocImpl extends LoginBloc {
     final String? validator = validateData(user);
     LoginScreenState currentState = _state.value;
     final isValidData = validator == null;
-    late final http.Response? loginResponse;
 
+    // Update initial state with user and validation result
     currentState = currentState.copyWith(
       user: user,
       validationError: validator,
     );
-    if (isValidData) {
-      try {
+    _state.add(currentState);
+
+    // Proceed only if local validation passed
+    if (!isValidData) return;
+
+    try {
+      currentState = currentState.copyWith(
+        loginButtonState: ButtonState.loading,
+      );
+      _state.add(currentState);
+
+      final http.Response? response = await LoginRepository.instance.login(
+        user.email!,
+        user.password!,
+      );
+
+      // Handle null response
+      if (response == null) {
         currentState = currentState.copyWith(
-          loginButtonState: ButtonState.loading,
-          validationError: validator,
+          loginButtonState: ButtonState.fail,
+          isUserLoggedIn: false,
+          validationError: "Unable to connect to server.",
         );
         _state.add(currentState);
+        return;
+      }
 
-        if (validator == null) {
-          loginResponse = await LoginRepository.instance.login(
-            user.email!,
-            user.password!,
-          );
-        }
+      final Map<String, dynamic> responseBody = jsonDecode(response.body);
 
+      final bool isSuccess =
+          response.statusCode == 200 && responseBody['success'] == true;
+      final String? serverError = responseBody['message'];
+
+      // Save login state only if success
+      if (isSuccess) {
         await _sharedPreferencesService.setSharedPrefsData(
           key: SharedPreferencesKeyConstants.loginKey,
-          value: loginResponse != null,
-        );
-
-        final isUserLoggedIn = loginResponse != null;
-        final loginButtonState = isUserLoggedIn
-            ? ButtonState.success
-            : ButtonState.fail;
-
-        currentState = currentState.copyWith(
-          isUserLoggedIn: isUserLoggedIn,
-          loginButtonState: loginButtonState,
-          validationError: validator,
-        );
-      } on Exception catch (e) {
-        debugPrint(e.toString());
-        currentState = currentState.copyWith(
-          isUserLoggedIn: false,
-          loginButtonState: ButtonState.fail,
-          validationError: validator,
+          value: true,
         );
       }
+
+      currentState = currentState.copyWith(
+        isUserLoggedIn: isSuccess,
+        loginButtonState: isSuccess ? ButtonState.success : ButtonState.fail,
+        validationError: isSuccess ? null : (serverError ?? "Login failed"),
+      );
+    } catch (e) {
+      debugPrint('Login Exception: $e');
+      currentState = currentState.copyWith(
+        isUserLoggedIn: false,
+        loginButtonState: ButtonState.fail,
+        validationError: "Something went wrong. Please try again.",
+      );
     }
+
     _state.add(currentState);
   }
 
