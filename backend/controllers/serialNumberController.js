@@ -141,7 +141,6 @@ exports.consumeSerialNumberController = async (req, res) => {
     const existingSerial = await SerialNumber.findOne({
       serial_number: serialNumber,
     });
-
     if (!existingSerial) {
       return res.status(404).json({
         message: "Serial number not found.",
@@ -150,28 +149,6 @@ exports.consumeSerialNumberController = async (req, res) => {
       });
     }
 
-    let commissionEarned = 0;
-
-    // Only award commission if user hasn't already consumed this serial
-    if (!existingSerial.consumedBy?.includes(userId)) {
-      commissionEarned = 1;
-
-      // Add userId to consumedBy array
-      existingSerial.consumedBy = existingSerial.consumedBy || [];
-      existingSerial.consumedBy.push(userId);
-    }
-
-    // Decrement quantity
-    existingSerial.quantity = Math.max((existingSerial.quantity || 0) - 1, 0);
-
-    // Update status if quantity is 0
-    if (existingSerial.quantity === 0) {
-      existingSerial.status = "outOfStock";
-    }
-
-    await existingSerial.save();
-
-    // Update the user's commission
     const user = await User.findById(userId);
     if (!user) {
       return res.status(404).json({
@@ -181,6 +158,31 @@ exports.consumeSerialNumberController = async (req, res) => {
       });
     }
 
+    let commissionEarned = 0;
+
+    // Only award commission if user hasn't already consumed this serial
+    const hasConsumedSerial = existingSerial.consumedBy?.includes(userId);
+    if (!hasConsumedSerial) {
+      commissionEarned = 1;
+
+      existingSerial.consumedBy = existingSerial.consumedBy || [];
+      existingSerial.consumedBy.push(userId);
+    }
+
+    // Add serialNumber to user's consumedSerialNumbers
+    user.consumedSerialNumbers = user.consumedSerialNumbers || [];
+    user.consumedSerialNumbers.push(serialNumber);
+
+    // Decrement quantity
+    existingSerial.quantity = Math.max((existingSerial.quantity || 0) - 1, 0);
+
+    // Update status if quantity is 0
+    if (existingSerial.quantity === 0) {
+      existingSerial.status = "outOfStock";
+    }
+
+    // Save both documents
+    await existingSerial.save();
     user.commissionAmount = (user.commissionAmount || 0) + commissionEarned;
     await user.save();
 
